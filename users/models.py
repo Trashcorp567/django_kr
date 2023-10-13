@@ -1,7 +1,10 @@
+import hashlib
+import datetime
+from datetime import timedelta
+from django.utils import timezone
 from django.contrib.auth.models import AbstractUser
 from django.core.mail import send_mail
 from django.db import models
-
 from config.settings import EMAIL_HOST_USER
 
 NULLABLE = {'blank': True, 'null': True}
@@ -16,6 +19,8 @@ class User(AbstractUser):
     activity = models.BooleanField(default=True, verbose_name='статус')
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []
+    verification_key = models.CharField(max_length=255, blank=True, null=True, verbose_name='ключ верификации')
+
 
     def send_registration_email(self):
         subject = 'Подтверждение регистрации'
