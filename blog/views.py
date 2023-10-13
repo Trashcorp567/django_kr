@@ -16,8 +16,25 @@ class BlogPostDetailView(LoginRequiredMixin, DetailView):
 
     def get_object(self, queryset=None):
         self.object = super().get_object(queryset)
-        self.object.views += 1
-        self.object.save()
+
+        cache_key = f'blogpost_{self.object.pk}'
+        cache_timeout = 60
+
+        cached_data = cache.get(cache_key)
+
+        if cached_data is None:
+            self.object.views += 1
+            self.object.save()
+            cache.set(cache_key, self.object, cache_timeout)
+        else:
+            last_updated = timezone.now()
+            time_elapsed = timezone.now() - last_updated
+
+            if time_elapsed.total_seconds() >= cache_timeout:
+                self.object.views += 1
+                self.object.save()
+                cache.set(cache_key, self.object, cache_timeout)
+
         return self.object
 
 
