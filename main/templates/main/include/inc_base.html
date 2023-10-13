@@ -1,0 +1,99 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>{{ title }}</title>
+    <!-- Bootstrap core CSS -->
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="{% static 'css/album.css' %}" rel="stylesheet">
+</head>
+
+<body style="background-color: #343a40">
+<header>
+    <div class="collapse bg-dark" id="navbarHeader">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-8 col-md-7 py-4">
+                    <h4 class="text-white">Блог</h4>
+                    <ul class="list-unstyled">
+                        <li><a href="{% url 'blog:blogpost_list' %}" class="text-white post-link">Все посты</a></li>
+                    </ul>
+                </div>
+                <div class="col-sm-4 col-md-2 py-4">
+                    <h4 class="text-white">Меню рассылок</h4>
+                    <ul class="list-unstyled">
+                        {% if user.is_staff %}
+                            <li><a href="{% url 'main:message_list' %}" class="text-white">Список сообщений</a></li>
+                            <li><a href="{% url 'main:mailing_list' %}" class="text-white">Список рассылок</a></li>
+                            <li><a href="{% url 'users:user_list' %}" class="text-white">Список пользователей</a></li>
+                        {% else %}
+                            <li><a href="{% url 'main:message_list' %}" class="text-white">Мои сообщения</a></li>
+                            <li><a href="{% url 'main:mailing_list' %}" class="text-white">Мои рассылки</a></li>
+                            <li><a href="{% url 'main:client_list' %}" class="text-white">Мои клиенты</a></li>
+                        {% endif %}
+                        {% if user.is_authenticated %}
+                            <li><a href="{% url 'users:profile' %}" class="text-white">Профиль</a></li>
+                            <li><a href="{% url 'users:logout' %}" class="text-white">Выйти</a></li>
+                        {% else %}
+                            <li><a href="{% url 'users:login' %}" class="text-white">Вход</a></li>
+                            <li><a href="{% url 'users:register' %}" class="text-white">Зарегистрироваться</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="navbar navbar-dark bg-dark box-shadow">
+        <div class="container d-flex justify-content-between">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader"
+                    aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
+    </div>
+</header>
+
+<main role="main">
+    <div class="album py-5 bg-white">
+        <div class="container">
+            {% include "main/include/inc_main.html" %}
+            <div class="blog-posts">
+                <h2>Последние записи блога:</h2>
+                <div class="row">
+                    {% for post in random_blog_posts %}
+                        <div class="col-md-6">
+                            <div class="blog-post">
+                                <h3>{{ post.title }}</h3>
+                                <img src="{{ post.preview.url }}" width="300" height="300">
+                                <p>{{ post.content }}</p>
+                                <p>Дата создания: {{ post.created_at }}</p>
+                                <p>Количество просмотров: {{ post.views }}</p>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer class="text-muted">
+    <div class="container">
+        <p>&copy; 2022 - {% now 'Y' %}</p>
+    </div>
+</footer>
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+<script src="{% static 'js/popper.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/vendor/holder.min.js' %}"></script>
+</body>
+</html>

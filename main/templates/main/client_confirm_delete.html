@@ -1,0 +1,17 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+<div class="row">
+        <div class="col-md-4">
+            <div class="card mb-4 box-shadow">
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        <p>Хотите удалить клиента "{{ object.name }}"?</p>
+                        <button type="submit" class="btn btn-danger">Подтвердить</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+</div>
+{% endblock %}

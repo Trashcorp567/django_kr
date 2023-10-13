@@ -1,0 +1,23 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+<div class="row">
+        <div class="col-md-4">
+            <div class="card mb-4 box-shadow">
+                <div class="card-body">
+                     <h5 class="card-title">{{ object.title }}</h5>
+                        <p class="card-text">{{ object.start_time }} - {{ object.end_time }}</p>
+                        <p class="card_footer">{{ object.message}}</p>
+                        <p class="card_footer">{{ object.status}}</p>
+                        <p class="card_footer">
+                            {% for client in object.clients.all %}
+                                {{ client.email }}
+                            {% endfor %}
+                        </p>
+                     <a href="{% url 'main:mailing_list' %}" class="btn btn-success">К списку</a>
+                     <a href="{% url 'main:mailing_update' object.pk %}" class="btn btn-warning">Изменить</a>
+                </div>
+            </div>
+        </div>
+</div>
+{% endblock %}

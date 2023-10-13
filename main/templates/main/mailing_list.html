@@ -1,0 +1,35 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+{% if user %}
+<a href="{% url 'main:mailing_create' %}" class="btn btn-success">Создать рассылку</a>
+{% endif %}
+    <div class="row">
+        {% for object in object_list %}
+            <div class="col-md-4">
+                <div class="card mb-4 box-shadow">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ object.title }}</h5>
+                        <p class="card-text">Старт: {{ object.start_time }}
+                        <p class="card-text">Конец: {{ object.end_time }}</p>
+                        <p class="card-text">Периодичность: {{ object.period }}</p>
+                        <p class="card_footer">Сообщение: {{ object.message}}</p>
+                        <p class="card_footer">Статус - {{ object.status}}</p>
+                        <p class="card_footer">{{ object.last_sent_date}}</p>
+                        <p class="card_footer">Получатели:
+                            {% for client in object.clients.all %}
+                                {{ client.email }}
+                            {% endfor %}
+                        </p>
+                        <p class="card_footer">Владелец - {{ object.owner}}</p>
+                            <a href="{% url 'main:mailing_detail' object.pk %}" class="btn btn-primary">Детально</a>
+                        {% if user.user %}
+                            <a href="{% url 'main:mailing_delete' object.pk %}" class="btn btn-primary">Удалить</a>
+                            <a href="{% url 'main:send' object.pk %}" class="btn btn-primary">Запустить</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

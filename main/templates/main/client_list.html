@@ -1,0 +1,23 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+{% if user %}
+<a href="{% url 'main:client_create' %}" class="btn btn-success">Создать клиента</a>
+{% endif %}
+    <div class="row">
+        {% for object in object_list %}
+            <div class="col-md-4">
+                <div class="card mb-4 box-shadow">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ object.name }}</h5>
+                        <p class="card-text">{{ object.email }}</p>
+                        {% if user %}
+                            <a href="{% url 'main:client_detail' object.pk %}" class="btn btn-primary">Детально</a>
+                            <a href="{% url 'main:client_delete' object.pk %}" class="btn btn-primary">Удалить</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+    <div class="row">
+        {% for object in object_list %}
+            <div class="col-md-4">
+                <div class="card mb-4 box-shadow">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ object.email }}</h5>
+                        <p class="card-text">Статус - {{ object.is_active }}</p>
+                        {% if object.activity %}
+                            <a href="{% url 'users:client_deactivate' object.pk %}" class="btn btn-danger">Деактивировать</a>
+                        {% else %}
+                            <a href="{% url 'users:client_deactivate' object.pk %}" class="btn btn-success">Активировать</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

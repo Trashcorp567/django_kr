@@ -1,0 +1,25 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+{% if user.user %}
+<a href="{% url 'main:message_create' %}" class="btn btn-success">Создать сообщение</a>
+{% endif %}
+    <div class="row">
+        {% for object in object_list %}
+            <div class="col-md-4">
+                <div class="card mb-4 box-shadow">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ object.title }}</h5>
+                        <p class="card-text">{{ object.body }}</p>
+                            <a href="{% url 'main:message_detail' object.pk %}" class="btn btn-primary">Детально</a>
+                        {% if user.user %}
+                            <a href="{% url 'main:message_delete' object.pk %}" class="btn btn-primary">Удалить</a>
+                        {% elif user.is_staff %}
+                            <p class="card-footer">Создатель - {{ object.owner }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

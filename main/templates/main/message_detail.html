@@ -1,0 +1,18 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+<div class="row">
+        <div class="col-md-4">
+            <div class="card mb-4 box-shadow">
+                <div class="card-body">
+                     <h5 class="card-title">{{ object.title }}</h5>
+                     <p class="card-text">{{ object.body }}</p>
+                     <a href="{% url 'main:message_list' %}" class="btn btn-success">На главную</a>
+                    {% if user.user %}
+                        <a href="{% url 'main:message_update' object.pk %}" class="btn btn-warning">Изменить</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+</div>
+{% endblock %}

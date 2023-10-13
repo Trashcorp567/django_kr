@@ -1,0 +1,25 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card mb-4 box-shadow">
+                <div class="card-body">
+                    <h5 class="card-title">{{ object.title }}</h5>
+
+                    {% if object.preview %}
+                        <img src="{{ object.preview.url }}" width="600" height="600"/>
+                    {% endif %}
+
+                    <p class="card-text">{{ object.content }}</p>
+                    <p class="card-text">Дата создания: {{ object.created_at }}</p>
+                    <p class="card-text">Количество просмотров: {{ object.views }}</p>
+                    {% if user.is_staff %}
+                        <a href="#" class="btn btn-primary">Редактировать</a>
+                        <a href="{% url 'blog:blogpost_delete' object.pk %}" class="btn btn-danger">Удалить</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
