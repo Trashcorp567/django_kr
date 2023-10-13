@@ -9,6 +9,7 @@ from django.core.mail import send_mail
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy, reverse
 from django.views import View
+from django.views.decorators.cache import cache_page
 from django.views.generic import CreateView, UpdateView, ListView
 
 from config import settings
