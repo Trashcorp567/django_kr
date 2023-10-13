@@ -21,6 +21,9 @@ class MainView(TemplateView):
         unique_clients = User.objects.filter(is_staff=False).count()
         context['unique_clients'] = unique_clients
 
+        all_mailing = Mailing.objects.all().count()
+        context['all_mailing'] = all_mailing
+
         active_mailings = Mailing.objects.filter(status='запущена').count()
         context['active_mailings'] = active_mailings
 
