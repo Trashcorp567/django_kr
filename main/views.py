@@ -27,6 +27,9 @@ class MainView(TemplateView):
         active_mailings = Mailing.objects.filter(status='запущена').count()
         context['active_mailings'] = active_mailings
 
+        all_mailing = Mailing.objects.all().count()
+        context['all_mailing'] = all_mailing
+
         total_mailings = Mailing.objects.count()
         context['total_mailings'] = total_mailings
 
