@@ -1,8 +1,8 @@
 {% extends 'main/base.html' %}
 
 {% block content %}
-{% if user.user %}
-<a href="{% url 'main:message_create' %}" class="btn btn-success">Создать сообщение</a>
+{% if user %}
+    <a href="{% url 'main:message_create' %}" class="btn btn-success">Создать сообщение</a>
 {% endif %}
     <div class="row">
         {% for object in object_list %}
